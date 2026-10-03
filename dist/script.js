@@ -1,5 +1,26 @@
 document.getElementById('year').textContent = new Date().getFullYear();
 
+const hero = document.querySelector('.hero');
+const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+if (hero && !reduceMotion.matches && window.matchMedia('(pointer: fine)').matches) {
+  let frame;
+  hero.addEventListener('pointermove', (event) => {
+    if (frame) cancelAnimationFrame(frame);
+    frame = requestAnimationFrame(() => {
+      const bounds = hero.getBoundingClientRect();
+      const x = (event.clientX - bounds.left) / bounds.width - 0.5;
+      const y = (event.clientY - bounds.top) / bounds.height - 0.5;
+      hero.style.setProperty('--hero-x', `${x * 16}px`);
+      hero.style.setProperty('--hero-y', `${y * 10}px`);
+    });
+  });
+  hero.addEventListener('pointerleave', () => {
+    hero.style.setProperty('--hero-x', '0px');
+    hero.style.setProperty('--hero-y', '0px');
+  });
+}
+
 document.querySelectorAll('.product-card').forEach((card) => {
   const whatsappLink = card.querySelector('a[href^="https://wa.me/50664510409"]');
   if (!whatsappLink) return;
