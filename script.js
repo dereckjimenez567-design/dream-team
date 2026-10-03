@@ -13,11 +13,19 @@ if (hero && !reduceMotion.matches && window.matchMedia('(pointer: fine)').matche
       const y = (event.clientY - bounds.top) / bounds.height - 0.5;
       hero.style.setProperty('--hero-x', `${x * 16}px`);
       hero.style.setProperty('--hero-y', `${y * 10}px`);
+      hero.style.setProperty('--glow-x', `${((x + 0.5) * 100).toFixed(1)}%`);
+      hero.style.setProperty('--glow-y', `${((y + 0.5) * 100).toFixed(1)}%`);
+      hero.style.setProperty('--title-x', `${x * -7}px`);
+      hero.style.setProperty('--title-y', `${y * -4}px`);
     });
   });
   hero.addEventListener('pointerleave', () => {
     hero.style.setProperty('--hero-x', '0px');
     hero.style.setProperty('--hero-y', '0px');
+    hero.style.setProperty('--glow-x', '72%');
+    hero.style.setProperty('--glow-y', '45%');
+    hero.style.setProperty('--title-x', '0px');
+    hero.style.setProperty('--title-y', '0px');
   });
 }
 
