@@ -2,6 +2,28 @@ document.getElementById('year').textContent = new Date().getFullYear();
 
 const hero = document.querySelector('.hero');
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+const menuToggle = document.querySelector('.menu-toggle');
+const mainNav = document.querySelector('#main-nav');
+
+if (menuToggle && mainNav) {
+  const closeMenu = () => {
+    document.body.classList.remove('menu-open');
+    menuToggle.setAttribute('aria-expanded', 'false');
+    menuToggle.setAttribute('aria-label', 'Abrir menú');
+  };
+
+  menuToggle.addEventListener('click', () => {
+    const willOpen = !document.body.classList.contains('menu-open');
+    document.body.classList.toggle('menu-open', willOpen);
+    menuToggle.setAttribute('aria-expanded', String(willOpen));
+    menuToggle.setAttribute('aria-label', willOpen ? 'Cerrar menú' : 'Abrir menú');
+  });
+
+  mainNav.querySelectorAll('a').forEach((link) => link.addEventListener('click', closeMenu));
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') closeMenu();
+  });
+}
 
 if (hero && !reduceMotion.matches && window.matchMedia('(pointer: fine)').matches) {
   let frame;
